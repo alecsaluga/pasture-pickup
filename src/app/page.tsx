@@ -160,12 +160,10 @@ export default function Home() {
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-4 leading-tight text-gray-900">
               Find livestock pickup
               <br />
-              <span className="text-gray-700">services near you</span>
+              <span className="text-green-600">services near you</span>
             </h1>
             <p className="text-xl sm:text-2xl text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto">
               Connect with <span className="font-semibold text-gray-900">licensed professionals</span> for safe, respectful livestock removal.
-              <br className="hidden sm:block" />
-              <span className="text-gray-800">Available nationwide</span> across the United States.
             </p>
 
             {/* Modern Search Bar */}

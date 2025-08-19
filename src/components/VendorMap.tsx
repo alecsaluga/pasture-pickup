@@ -177,7 +177,7 @@ export function VendorMap({
         ? [centerLocation.lng, centerLocation.lat]
         : [-98.5795, 39.8283];
     
-    const initialZoom = defaultView === 'us' ? 4 : centerLocation ? 11 : 4;
+    const initialZoom = defaultView === 'us' ? 4 : centerLocation ? 6 : 4;
 
     map.current = new mapboxgl.Map({
       container: mapRef.current,
@@ -513,11 +513,8 @@ export function VendorMap({
           
           if (centerLocation) {
             // For search results, center on the searched location - more zoomed out
-            map.current.flyTo({
-              center: [centerLocation.lng, centerLocation.lat],
-              zoom: 6,
-              duration: 1000
-            });
+            map.current.setCenter([centerLocation.lng, centerLocation.lat]);
+            map.current.setZoom(6);
           } else {
             // For other local views, fit to vendor bounds
             const bounds = new mapboxgl.LngLatBounds();

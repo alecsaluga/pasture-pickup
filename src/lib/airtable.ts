@@ -95,7 +95,7 @@ export async function getVendors(filters: {
 
     // Filter by location if provided
     if (filters.location) {
-      const { lat, lng, radius = 50 } = filters.location;
+      const { lat, lng, radius = 100 } = filters.location;
       vendors = vendors.filter(vendor => {
         if (!vendor.latitude || !vendor.longitude) return false;
         const distance = calculateDistance(lat, lng, vendor.latitude, vendor.longitude);

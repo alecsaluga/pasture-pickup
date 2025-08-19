@@ -61,11 +61,11 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
   // Fetch all vendors
   const allVendors = await getVendors({ status: 'Active' });
   
-  // Filter vendors within 50 miles of search location
+  // Filter vendors within 100 miles of search location
   const nearbyVendors = allVendors.filter(vendor => {
     if (!vendor.latitude || !vendor.longitude) return false;
     const distance = calculateDistance(lat, lng, vendor.latitude, vendor.longitude);
-    return distance <= 50; // 50 mile radius
+    return distance <= 100; // 100 mile radius
   });
 
   // Sort by distance
@@ -166,7 +166,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
                   </div>
                   <div className="flex items-center space-x-2">
                     <Clock className="w-4 h-4" />
-                    <span>50 mile radius</span>
+                    <span>100 mile radius</span>
                   </div>
                 </div>
               </div>
@@ -230,7 +230,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
                   No Providers Found in {locationName}
                 </h3>
                 <p className="text-gray-600 mb-8">
-                  We couldn't find any livestock removal services within 50 miles of {locationName}. 
+                  We couldn't find any livestock removal services within 100 miles of {locationName}. 
                   Try expanding your search or contact us for assistance.
                 </p>
                 

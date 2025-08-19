@@ -63,7 +63,7 @@ export default async function CityPage({ params }: CityPageProps) {
     vendor.city.toLowerCase() === city.toLowerCase() && vendor.stateCode === state.code
   );
   
-  // Also get nearby vendors within 50 miles
+  // Also get nearby vendors within 100 miles
   const nearbyVendors = allVendors.filter(vendor => 
     vendor.stateCode === state.code && 
     vendor.city.toLowerCase() !== city.toLowerCase()
@@ -367,7 +367,7 @@ export default async function CityPage({ params }: CityPageProps) {
                 
                 <h3 className="text-lg font-semibold text-gray-900 mb-4 mt-6">Service Areas</h3>
                 <p className="text-gray-600">
-                  Providers serving {city} typically cover surrounding areas within a 25-50 mile radius, 
+                  Providers serving {city} typically cover surrounding areas within a 50-100 mile radius, 
                   including rural and farm locations throughout {state.name}.
                 </p>
               </div>
