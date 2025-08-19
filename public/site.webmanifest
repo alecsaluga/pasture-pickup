@@ -1,0 +1,16 @@
+{
+  "name": "Pasture Pickup - Livestock Removal Directory",
+  "short_name": "Pasture Pickup",
+  "description": "Find professional livestock removal services nationwide",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}
