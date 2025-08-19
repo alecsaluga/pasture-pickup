@@ -7,10 +7,10 @@ import { MapPin, Phone, Clock, Users } from 'lucide-react';
 import Link from 'next/link';
 
 interface CityPageProps {
-  params: {
+  params: Promise<{
     state: string;
     city: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {

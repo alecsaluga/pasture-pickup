@@ -9,9 +9,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 interface SearchPageProps {
-  params: {
+  params: Promise<{
     location: string;
-  };
+  }>;
   searchParams: {
     lat?: string;
     lng?: string;

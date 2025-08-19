@@ -6,9 +6,9 @@ import { MapPin, Phone, Globe, Clock, Shield, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 
 interface VendorPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: VendorPageProps): Promise<Metadata> {

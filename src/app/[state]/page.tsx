@@ -8,9 +8,9 @@ import { MapPin, Phone, Clock, Users } from 'lucide-react';
 import Link from 'next/link';
 
 interface StatePageProps {
-  params: {
+  params: Promise<{
     state: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
