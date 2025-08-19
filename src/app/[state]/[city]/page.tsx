@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
       description: `Professional livestock removal services in ${cityName}, ${stateInfo.name}. Licensed, insured providers available 24/7.`
     },
     alternates: {
-      canonical: `/${state}/${city}`
+      canonical: `/${state}/${cityName}`
     }
   };
 }
@@ -72,8 +72,8 @@ export default async function CityPage({ params }: CityPageProps) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": `Livestock Removal Services in ${city}, ${state.name}`,
-    "description": `Professional livestock removal services in ${city}, ${state.name}. Licensed, insured providers available 24/7.`,
+    "name": `Livestock Removal Services in ${cityName}, ${stateInfo.name}`,
+    "description": `Professional livestock removal services in ${cityName}, ${stateInfo.name}. Licensed, insured providers available 24/7.`,
     "url": `https://pasturepickup.com/${params.state}/${params.city}`,
     "mainEntity": {
       "@type": "Service",
@@ -123,19 +123,19 @@ export default async function CityPage({ params }: CityPageProps) {
             <ol className="flex items-center space-x-2">
               <li><Link href="/" className="text-blue-600 hover:underline">Home</Link></li>
               <li className="text-gray-400">/</li>
-              <li><Link href={`/${stateParam}`} className="text-blue-600 hover:underline">{state.name}</Link></li>
+              <li><Link href={`/${stateParam}`} className="text-blue-600 hover:underline">{stateInfo.name}</Link></li>
               <li className="text-gray-400">/</li>
-              <li className="text-gray-600">{city}</li>
+              <li className="text-gray-600">{cityName}</li>
             </ol>
           </nav>
 
           {/* Hero Section */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Livestock Removal Services in {city}, {state.name}
+              Livestock Removal Services in {cityName}, {stateInfo.name}
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Professional livestock removal services in {city}, {state.name}. Connect with licensed, 
+              Professional livestock removal services in {cityName}, {stateInfo.name}. Connect with licensed, 
               insured providers for emergency livestock removal, dead horse removal, and farm cleanup services.
             </p>
             
@@ -159,7 +159,7 @@ export default async function CityPage({ params }: CityPageProps) {
           {(cityVendors.length > 0 || nearbyVendors.length > 0) && (
             <div className="mb-12">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Livestock Removal Providers Near {city}, {state.name}
+                Livestock Removal Providers Near {cityName}, {stateInfo.name}
               </h2>
               <VendorMap
                 vendors={[...cityVendors, ...nearbyVendors]}
@@ -172,7 +172,7 @@ export default async function CityPage({ params }: CityPageProps) {
           {/* Services Section */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Livestock Removal Services in {city}, {state.name}
+              Livestock Removal Services in {cityName}, {stateInfo.name}
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -186,7 +186,7 @@ export default async function CityPage({ params }: CityPageProps) {
                     {SERVICE_DISPLAY_NAMES[service as keyof typeof SERVICE_DISPLAY_NAMES]}
                   </h3>
                   <p className="text-gray-600 text-sm mb-4">
-                    Professional {SERVICE_DISPLAY_NAMES[service as keyof typeof SERVICE_DISPLAY_NAMES].toLowerCase()} in {city}, {state.name}
+                    Professional {SERVICE_DISPLAY_NAMES[service as keyof typeof SERVICE_DISPLAY_NAMES].toLowerCase()} in {cityName}, {stateInfo.name}
                   </p>
                   <span className="text-blue-600 text-sm font-medium">
                     Find Local Providers →
@@ -200,7 +200,7 @@ export default async function CityPage({ params }: CityPageProps) {
           {cityVendors.length > 0 && (
             <div className="mb-12">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Local Livestock Removal Providers in {city}
+                Local Livestock Removal Providers in {cityName}
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -236,7 +236,7 @@ export default async function CityPage({ params }: CityPageProps) {
                             window.gtag('event', 'vendor_contact', {
                               vendor_name: vendor.name,
                               contact_method: 'phone',
-                              location: `${city}, ${state.name}`
+                              location: `${cityName}, ${stateInfo.name}`
                             });
                           }
                         }}
@@ -261,7 +261,7 @@ export default async function CityPage({ params }: CityPageProps) {
           {nearbyVendors.length > 0 && (
             <div className="mb-12">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Nearby Providers Serving {city}
+                Nearby Providers Serving {cityName}
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -315,14 +315,14 @@ export default async function CityPage({ params }: CityPageProps) {
               <div className="mb-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">No Local Providers Found</h3>
                 <p className="text-gray-600">
-                  We're working to add more livestock removal providers in the {city} area.
+                  We're working to add more livestock removal providers in the {cityName} area.
                 </p>
               </div>
               
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-md mx-auto">
                 <h4 className="text-lg font-medium text-blue-900 mb-2">Need Immediate Help?</h4>
                 <p className="text-blue-800 mb-4 text-sm">
-                  Contact Gentle Goodbye Equine for professional livestock removal services in the {city} area.
+                  Contact Gentle Goodbye Equine for professional livestock removal services in the {cityName} area.
                 </p>
                 <a 
                   href="tel:+1234567890"
@@ -337,20 +337,20 @@ export default async function CityPage({ params }: CityPageProps) {
           {/* Local Information */}
           <div className="bg-white rounded-lg shadow-md p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Livestock Removal Information for {city}, {state.name}
+              Livestock Removal Information for {cityName}, {stateInfo.name}
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Emergency Response</h3>
                 <p className="text-gray-600 mb-4">
-                  Most providers serving {city} offer same-day emergency response for livestock removal. 
+                  Most providers serving {cityName} offer same-day emergency response for livestock removal. 
                   Call immediately when you discover deceased livestock to prevent health and environmental issues.
                 </p>
                 
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Local Regulations</h3>
                 <p className="text-gray-600">
-                  {city} follows {state.name} state regulations for livestock disposal. Licensed providers 
+                  {cityName} follows {stateInfo.name} state regulations for livestock disposal. Licensed providers 
                   will ensure proper handling and disposal according to local health department requirements.
                 </p>
               </div>
@@ -358,7 +358,7 @@ export default async function CityPage({ params }: CityPageProps) {
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">What to Expect</h3>
                 <ul className="text-gray-600 space-y-2">
-                  <li>• Quick response times in the {city} area</li>
+                  <li>• Quick response times in the {cityName} area</li>
                   <li>• Professional, respectful service</li>
                   <li>• Proper equipment and vehicles</li>
                   <li>• Licensed and insured providers</li>
@@ -367,8 +367,8 @@ export default async function CityPage({ params }: CityPageProps) {
                 
                 <h3 className="text-lg font-semibold text-gray-900 mb-4 mt-6">Service Areas</h3>
                 <p className="text-gray-600">
-                  Providers serving {city} typically cover surrounding areas within a 50-100 mile radius, 
-                  including rural and farm locations throughout {state.name}.
+                  Providers serving {cityName} typically cover surrounding areas within a 50-100 mile radius, 
+                  including rural and farm locations throughout {stateInfo.name}.
                 </p>
               </div>
             </div>

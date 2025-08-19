@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
       description: `Professional ${serviceName.toLowerCase()} services in ${cityName}, ${stateInfo.name}. Licensed, insured providers available 24/7.`
     },
     alternates: {
-      canonical: `/${state}/${city}/${serviceParam}`
+      canonical: `/${state}/${cityName}/${serviceParam}`
     }
   };
 }
@@ -67,16 +67,16 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const serviceVendors = allVendors.filter(vendor => {
     const vendorServices = vendor.serviceTypes.map(s => s.toLowerCase());
     const searchService = serviceName.toLowerCase();
-    return vendor.stateCode === state.code && 
+    return vendor.stateCode === stateInfo.code && 
            vendorServices.some(vs => vs.includes(searchService.split(' ')[0]));
   });
 
   // Prioritize vendors in the specific city
   const cityVendors = serviceVendors.filter(v => 
-    v.city.toLowerCase() === city.toLowerCase()
+    v.cityName.toLowerCase() === cityName.toLowerCase()
   );
   const nearbyVendors = serviceVendors.filter(v => 
-    v.city.toLowerCase() !== city.toLowerCase()
+    v.cityName.toLowerCase() !== cityName.toLowerCase()
   ).slice(0, 3);
 
   const structuredData = {
@@ -109,7 +109,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
     switch (service) {
       case 'dead-horse-removal':
         return {
-          description: `Professional dead horse removal services in ${city}, ${state}. Our licensed providers handle equine removal with dignity and respect, ensuring proper disposal according to state regulations.`,
+          description: `Professional dead horse removal services in ${cityName}, ${state}. Our licensed providers handle equine removal with dignity and respect, ensuring proper disposal according to state regulations.`,
           urgency: 'Immediate response required for health and safety.',
           process: [
             'Call for immediate emergency response',
@@ -127,7 +127,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         };
       case 'dead-cattle-removal':
         return {
-          description: `Professional dead cattle removal services in ${city}, ${state}. Expert handling of bovine removal with proper equipment and procedures for safe, legal disposal.`,
+          description: `Professional dead cattle removal services in ${cityName}, ${state}. Expert handling of bovine removal with proper equipment and procedures for safe, legal disposal.`,
           urgency: 'Quick response needed to prevent disease spread.',
           process: [
             'Emergency call and assessment',
@@ -145,7 +145,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         };
       default:
         return {
-          description: `Professional ${serviceName.toLowerCase()} in ${city}, ${state}. Licensed providers offering comprehensive livestock removal services with emergency response capability.`,
+          description: `Professional ${serviceName.toLowerCase()} in ${cityName}, ${state}. Licensed providers offering comprehensive livestock removal services with emergency response capability.`,
           urgency: 'Prompt response recommended for health and safety.',
           process: [
             'Initial consultation and assessment',
@@ -164,7 +164,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
     }
   };
 
-  const serviceContent = getServiceContent(service, city, state.name);
+  const serviceContent = getServiceContent(service, cityName, stateInfo.name);
 
   return (
     <>
@@ -196,9 +196,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <ol className="flex items-center space-x-2">
               <li><Link href="/" className="text-blue-600 hover:underline">Home</Link></li>
               <li className="text-gray-400">/</li>
-              <li><Link href={`/${stateParam}`} className="text-blue-600 hover:underline">{state.name}</Link></li>
+              <li><Link href={`/${stateParam}`} className="text-blue-600 hover:underline">{stateInfo.name}</Link></li>
               <li className="text-gray-400">/</li>
-              <li><Link href={`/${stateParam}/${cityParam}`} className="text-blue-600 hover:underline">{city}</Link></li>
+              <li><Link href={`/${stateParam}/${cityParam}`} className="text-blue-600 hover:underline">{cityName}</Link></li>
               <li className="text-gray-400">/</li>
               <li className="text-gray-600">{serviceName}</li>
             </ol>
@@ -207,7 +207,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           {/* Hero Section */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              {serviceName} in {city}, {state.name}
+              {serviceName} in {cityName}, {stateInfo.name}
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               {serviceContent.description}
@@ -231,7 +231,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             {/* Emergency CTA */}
             <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-2xl mx-auto">
               <h2 className="text-lg font-semibold text-red-900 mb-2">Need Immediate {serviceName}?</h2>
-              <p className="text-red-800 mb-4">Emergency livestock removal available 24/7 in {city}, {state.name}</p>
+              <p className="text-red-800 mb-4">Emergency livestock removal available 24/7 in {cityName}, {stateInfo.name}</p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a 
                   href="tel:+1234567890"
@@ -254,7 +254,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           {(cityVendors.length > 0 || nearbyVendors.length > 0) && (
             <div className="mb-12">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                {serviceName} Providers Near {city}, {state.name}
+                {serviceName} Providers Near {cityName}, {stateInfo.name}
               </h2>
               <VendorMap
                 vendors={[...cityVendors, ...nearbyVendors]}
@@ -304,7 +304,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             {cityVendors.length > 0 && (
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Local {serviceName} Providers in {city}
+                  Local {serviceName} Providers in {cityName}
                 </h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -364,7 +364,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             {nearbyVendors.length > 0 && (
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Nearby {serviceName} Providers Serving {city}
+                  Nearby {serviceName} Providers Serving {cityName}
                 </h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -413,17 +413,17 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <div className="text-center py-12">
               <div className="mb-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  No {serviceName} Providers Found in {city}
+                  No {serviceName} Providers Found in {cityName}
                 </h3>
                 <p className="text-gray-600">
-                  We're working to add more {serviceName.toLowerCase()} providers in the {city} area.
+                  We're working to add more {serviceName.toLowerCase()} providers in the {cityName} area.
                 </p>
               </div>
               
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-md mx-auto">
                 <h4 className="text-lg font-medium text-blue-900 mb-2">Need {serviceName} Now?</h4>
                 <p className="text-blue-800 mb-4 text-sm">
-                  Contact Gentle Goodbye Equine for professional {serviceName.toLowerCase()} in the {city} area.
+                  Contact Gentle Goodbye Equine for professional {serviceName.toLowerCase()} in the {cityName} area.
                 </p>
                 <a 
                   href="tel:+1234567890"
@@ -438,23 +438,23 @@ export default async function ServicePage({ params }: ServicePageProps) {
           {/* FAQ Section */}
           <div className="bg-white rounded-lg shadow-md p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              {serviceName} FAQ for {city}, {state.name}
+              {serviceName} FAQ for {cityName}, {stateInfo.name}
             </h2>
             
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  How quickly can I get {serviceName.toLowerCase()} in {city}?
+                  How quickly can I get {serviceName.toLowerCase()} in {cityName}?
                 </h3>
                 <p className="text-gray-600">
-                  Most providers in {city} offer same-day or emergency response for {serviceName.toLowerCase()}. 
+                  Most providers in {cityName} offer same-day or emergency response for {serviceName.toLowerCase()}. 
                   Call immediately for the fastest service.
                 </p>
               </div>
               
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  What does {serviceName.toLowerCase()} cost in {city}, {state.name}?
+                  What does {serviceName.toLowerCase()} cost in {cityName}, {stateInfo.name}?
                 </h3>
                 <p className="text-gray-600">
                   Costs vary based on animal size, location accessibility, and urgency. Most providers 
@@ -464,7 +464,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Are {serviceName.toLowerCase()} providers in {city} licensed?
+                  Are {serviceName.toLowerCase()} providers in {cityName} licensed?
                 </h3>
                 <p className="text-gray-600">
                   All providers in our directory are required to be properly licensed and insured. 
@@ -474,7 +474,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  What should I do while waiting for {serviceName.toLowerCase()} in {city}?
+                  What should I do while waiting for {serviceName.toLowerCase()} in {cityName}?
                 </h3>
                 <p className="text-gray-600">
                   Keep people and animals away from the area, avoid moving the deceased animal, 
