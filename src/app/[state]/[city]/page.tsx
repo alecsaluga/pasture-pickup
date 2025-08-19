@@ -24,22 +24,22 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
     };
   }
 
-  const { city, state } = location;
+  const { city: cityName, state: stateInfo } = location;
 
   return {
-    title: `Livestock Removal Services in ${city}, ${state.name} | Pasture Pickup`,
-    description: `Find professional livestock removal services in ${city}, ${state.name}. Licensed providers for dead horse removal, cattle removal, and emergency livestock services. Available 24/7.`,
+    title: `Livestock Removal Services in ${cityName}, ${stateInfo.name} | Pasture Pickup`,
+    description: `Find professional livestock removal services in ${cityName}, ${stateInfo.name}. Licensed providers for dead horse removal, cattle removal, and emergency livestock services. Available 24/7.`,
     openGraph: {
-      title: `Livestock Removal Services in ${city}, ${state.name}`,
-      description: `Professional livestock removal services in ${city}, ${state.name}. Licensed, insured providers available 24/7.`,
+      title: `Livestock Removal Services in ${cityName}, ${stateInfo.name}`,
+      description: `Professional livestock removal services in ${cityName}, ${stateInfo.name}. Licensed, insured providers available 24/7.`,
       type: 'website',
       locale: 'en_US',
       siteName: 'Pasture Pickup'
     },
     twitter: {
       card: 'summary_large_image',
-      title: `Livestock Removal Services in ${city}, ${state.name}`,
-      description: `Professional livestock removal services in ${city}, ${state.name}. Licensed, insured providers available 24/7.`
+      title: `Livestock Removal Services in ${cityName}, ${stateInfo.name}`,
+      description: `Professional livestock removal services in ${cityName}, ${stateInfo.name}. Licensed, insured providers available 24/7.`
     },
     alternates: {
       canonical: `/${state}/${city}`
@@ -55,18 +55,18 @@ export default async function CityPage({ params }: CityPageProps) {
     notFound();
   }
 
-  const { city, state } = location;
+  const { city: cityName, state: stateInfo } = location;
 
   // Fetch vendors for this city and surrounding areas
   const allVendors = await getVendors({ status: 'Active' });
   const cityVendors = allVendors.filter(vendor => 
-    vendor.city.toLowerCase() === city.toLowerCase() && vendor.stateCode === state.code
+    vendor.city.toLowerCase() === cityName.toLowerCase() && vendor.stateCode === stateInfo.code
   );
   
   // Also get nearby vendors within 100 miles
   const nearbyVendors = allVendors.filter(vendor => 
-    vendor.stateCode === state.code && 
-    vendor.city.toLowerCase() !== city.toLowerCase()
+    vendor.stateCode === stateInfo.code && 
+    vendor.city.toLowerCase() !== cityName.toLowerCase()
   ).slice(0, 3);
 
   const structuredData = {

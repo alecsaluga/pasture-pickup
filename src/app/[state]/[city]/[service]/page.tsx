@@ -26,23 +26,23 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     };
   }
 
-  const { city, state } = location;
+  const { city: cityName, state: stateInfo } = location;
   const serviceName = SERVICE_DISPLAY_NAMES[service as keyof typeof SERVICE_DISPLAY_NAMES];
 
   return {
-    title: `${serviceName} in ${city}, ${state.name} | Pasture Pickup`,
-    description: `Professional ${serviceName.toLowerCase()} services in ${city}, ${state.name}. Licensed, insured providers available 24/7. Emergency response and same-day service available.`,
+    title: `${serviceName} in ${cityName}, ${stateInfo.name} | Pasture Pickup`,
+    description: `Professional ${serviceName.toLowerCase()} services in ${cityName}, ${stateInfo.name}. Licensed, insured providers available 24/7. Emergency response and same-day service available.`,
     openGraph: {
-      title: `${serviceName} in ${city}, ${state.name}`,
-      description: `Professional ${serviceName.toLowerCase()} services in ${city}, ${state.name}. Licensed, insured providers available 24/7.`,
+      title: `${serviceName} in ${cityName}, ${stateInfo.name}`,
+      description: `Professional ${serviceName.toLowerCase()} services in ${cityName}, ${stateInfo.name}. Licensed, insured providers available 24/7.`,
       type: 'website',
       locale: 'en_US',
       siteName: 'Pasture Pickup'
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${serviceName} in ${city}, ${state.name}`,
-      description: `Professional ${serviceName.toLowerCase()} services in ${city}, ${state.name}. Licensed, insured providers available 24/7.`
+      title: `${serviceName} in ${cityName}, ${stateInfo.name}`,
+      description: `Professional ${serviceName.toLowerCase()} services in ${cityName}, ${stateInfo.name}. Licensed, insured providers available 24/7.`
     },
     alternates: {
       canonical: `/${state}/${city}/${serviceParam}`
@@ -59,7 +59,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
     notFound();
   }
 
-  const { city, state } = location;
+  const { city: cityName, state: stateInfo } = location;
   const serviceName = SERVICE_DISPLAY_NAMES[service as keyof typeof SERVICE_DISPLAY_NAMES];
 
   // Fetch vendors that offer this specific service
@@ -83,7 +83,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": serviceName,
-    "description": `Professional ${serviceName.toLowerCase()} services in ${city}, ${state.name}`,
+    "description": `Professional ${serviceName.toLowerCase()} services in ${cityName}, ${stateInfo.name}`,
     "provider": {
       "@type": "Organization",
       "name": "Pasture Pickup"
@@ -340,7 +340,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                                 vendor_name: vendor.name,
                                 contact_method: 'phone',
                                 service_type: serviceName,
-                                location: `${city}, ${state.name}`
+                                location: `${cityName}, ${stateInfo.name}`
                               });
                             }
                           }}
